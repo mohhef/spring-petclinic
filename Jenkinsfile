@@ -32,7 +32,7 @@ pipeline {
        }
        // triggered when red sign
        failure {
-           slackSend color: 'RED', message: 'Build failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})'
+           slackSend color: 'bad', message: 'Build failed: Job "${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
        }
     }
 }
