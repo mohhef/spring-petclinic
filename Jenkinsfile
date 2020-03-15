@@ -28,7 +28,7 @@ pipeline {
         post {
        // only triggered when blue or green sign
        success {
-           slackSend color: 'good', message: 'Passed Build'
+           slackSend color: 'good', message: 'Passed Build '${BUILD_TAG}
        }
        // triggered when red sign
        failure {
