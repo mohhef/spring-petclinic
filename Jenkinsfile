@@ -25,4 +25,14 @@ pipeline {
             }
         }
     }
+        post {
+       // only triggered when blue or green sign
+       success {
+           slackSend color: 'good', message: 'Passed Build'
+       }
+       // triggered when red sign
+       failure {
+           slackSend color: 'bad', message: 'Failed Build'
+       }
+    }
 }
