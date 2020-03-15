@@ -28,11 +28,11 @@ pipeline {
         post {
        // only triggered when blue or green sign
        success {
-           slackSend color: 'good', message: 'Passed Build ${BUILD_TAG}'
+           slackSend color: 'good', message: "Build passed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
        }
        // triggered when red sign
        failure {
-           slackSend color: 'bad', message: 'Failed Build'
+           slackSend color: 'RED', message: 'Build failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})'
        }
     }
 }
