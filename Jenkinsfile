@@ -12,6 +12,7 @@ pipeline {
                     }
                     //when {equals expected: 15, actual: commitCounter}
 
+                    
                     echo "This's the 8th commit"
                     echo "After ------> ${commitCounter}"
                     bat './mvnw package' 
