@@ -14,7 +14,7 @@ pipeline {
 
                     echo "This's the 8th commit"
                     echo "After ------> ${commitCounter}"
-                    sh './mvnw package' 
+                    bat './mvnw package' 
                 }
             }
         }
