@@ -1,39 +1,22 @@
+def commitCounter = env.BUILD_NUMBER.toInteger()
+    
 pipeline {
-
     agent any
     stages {
         stage('Build') {
             steps {
-                bat './mvnw clean' 
+                script{
+                    echo "!!!!!~~~~~~~~ commit number: ${commitCounter}"
+                    if (commitCounter%2 != 0){
+                       error 'Number of commits doesn\'t meet the building criteria!'
+                    }
+                    //when {equals expected: 15, actual: commitCounter}
+
+                    echo "This's the 8th commit"
+                    echo "After ------> ${commitCounter}"
+                    sh './mvnw package' 
+                }
             }
         }
-        stage('Test') {
-            steps {
-                bat './mvnw test'
-            }
-        }
-        stage('Package') {
-            steps {
-                bat './mvnw package' 
-            }
-        }
-        stage('Deploy') {
-            when {
-                branch 'master'
-            }
-            steps {
-                bat './mvnw deploy'
-            }
-        }
-    }
-        post {
-       // only triggered when blue or green sign
-       success {
-           slackSend color: 'good', message: "Build passed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-       }
-       // triggered when red sign
-       failure {
-           slackSend color: 'bad', message: "Build failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-       }
     }
 }
