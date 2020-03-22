@@ -1,4 +1,4 @@
-def =${env.JOB_NAME}
+def jobname=${env.JOB_NAME}
 def job = hudson.model.Hudson.instance.getItem(jobname)
 def builds = job.getBuilds()
 
