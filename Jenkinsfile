@@ -14,7 +14,7 @@ pipeline {
           }
         }
 
-        state('doFullBuild'){
+        stage('doFullBuild'){
           when{
             expression{commitNumber>=5}
           }
@@ -22,7 +22,7 @@ pipeline {
             bat './mvnw clean compile'
           }
         }
-        
+
     }       
 }
 
