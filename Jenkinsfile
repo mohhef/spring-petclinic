@@ -1,4 +1,5 @@
 def commitNumber = 0
+def resetNumber = 0
 
 pipeline {
     agent any
@@ -20,6 +21,16 @@ pipeline {
           }
           steps{
             bat './mvnw clean compile'
+          }
+        }
+
+        stage('resetCommitNumber'){
+          when{
+            expression{commitNumber>=5}
+          }
+          steps{
+            bat "dir > hello.txt"
+            bat "echo ${resetNumber} > commitCounter.txt"
           }
         }
 
