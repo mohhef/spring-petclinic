@@ -1,12 +1,7 @@
 def commitNumber = 0
 def resetNumber=0
 def successfulSHA = null
-def commitHashForBuild( build ) {
-  def scmAction = build?.actions.find { action -> action instanceof jenkins.scm.api.SCMRevisionAction }
-  return scmAction?.revision?.hash
-}
 def lastSuccessfulHash = null
-def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
 
 pipeline {
     agent any
@@ -47,6 +42,14 @@ pipeline {
             bat "py writeToFile.py"
           }
         }
+
+        stage('getSuccessfulHash'){
+          steps{
+          script{
+            Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
+            }
+          }
+          }
     }
 }
 
