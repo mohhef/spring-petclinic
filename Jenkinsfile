@@ -20,7 +20,7 @@ pipeline {
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt').trim()
               successfulSHA = value
-              echo "The SHA file is ${successfulSHA} commits"
+              echo "The SHA file is ${successfulSHA}"
             }
           }
         }
