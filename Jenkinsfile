@@ -29,7 +29,7 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat "py writeToFe.py"
+            bat "py writeToFile.py"
           }
         }
 
