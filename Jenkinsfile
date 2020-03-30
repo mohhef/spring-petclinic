@@ -49,10 +49,12 @@ pipeline {
         }
 
         stage('getSuccessfulHash'){
-          if ( lastSuccessfulBuild ) {
-            lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
-          }
-          echo "${lastSuccessfulHash}"
+          script{
+            if ( lastSuccessfulBuild ) {
+              lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+            }
+            echo "${lastSuccessfulHash}"
+            }
         }
     }
 }
