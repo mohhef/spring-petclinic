@@ -49,12 +49,13 @@ pipeline {
         }
 
         stage('getSuccessfulHash'){
+          steps{
           script{
             Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
             echo "${Id}"
             }
           }
-        }
+          }
     }
 }
 
