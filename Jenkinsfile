@@ -8,7 +8,7 @@ pipeline {
         stage('getCommitNumber') {
           steps{
             script{
-              value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
+              value = readFile('../counter.txt').trim()
               commitNumber= value as int
               echo "There are ${commitNumber} commits"
             }
