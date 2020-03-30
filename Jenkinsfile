@@ -29,8 +29,9 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat 'dir > hello.txt'
-            bat "echo ${resetNumber} > hello.txt"
+            script{
+              writeFile file: "hello.txt", text: "This file is useless, no need to archive it."
+            }
           }
         }
 
