@@ -1,24 +1,19 @@
-def commitCounter = env.BUILD_NUMBER.toInteger()
-    
-pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                script{
-                    echo "!!!!!~~~~~~~~ commit number: ${commitCounter}"
-                    if (commitCounter%2 != 0){
-                       error 'Number of commits doesn\'t meet the building criteria!'
-                    }
-                    //when {equals expected: 15, actual: commitCounter}
+def jobname=${env.JOB_NAME}
+def job = hudson.model.Hudson.instance.getItem(jobname)
+def builds = job.getBuilds()
 
-                    
-                    echo "This's the 8th commit"
-                    echo "After ------> ${commitCounter}"
-                    bat './mvnw package' 
-                }
-            }
-        }
-    }
+def thisBuild = builds[0]
+def fourBuildsAgo = builds[4] 
+
+println('env' + builds[0].getEnvironment().keySet() )
+println('each job has previous job e.g "' + thisBuild.getPreviousBuild() + '"')
+
+fourBuildsAgo.getChangeSets().each {
+  println('Num of commits in this build ' + (it.getLogs()).size() )
+
+  it.getLogs().each {
+     println('commit data : '  + it.getRevision() + ' ' + it.getAuthor() + ' ' + it.getMsg()) 
+  }
 }
+
 
