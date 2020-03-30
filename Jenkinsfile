@@ -1,19 +1,41 @@
-def jobname=${env.JOB_NAME}
-def job = hudson.model.Hudson.instance.getItem(jobname)
-def builds = job.getBuilds()
+pipeline {
 
-def thisBuild = builds[0]
-def fourBuildsAgo = builds[4] 
-
-println('env' + builds[0].getEnvironment().keySet() )
-println('each job has previous job e.g "' + thisBuild.getPreviousBuild() + '"')
-
-fourBuildsAgo.getChangeSets().each {
-  println('Num of commits in this build ' + (it.getLogs()).size() )
-
-  it.getLogs().each {
-     println('commit data : '  + it.getRevision() + ' ' + it.getAuthor() + ' ' + it.getMsg()) 
-  }
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                bat './mvnw clean' 
+            }
+        }
+        stage('Test') {
+            steps {
+                bat './mvnw test'
+            }
+        }
+        stage('Package') {
+            steps {
+                bat './mvnw package' 
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'master'
+            }
+            steps {
+                bat './mvnw deploy'
+            }
+        }
+    }
+        post {
+       // only triggered when blue or green sign
+       success {
+           slackSend color: 'good', message: "Build passed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+       }
+       // triggered when red sign
+       failure {
+           slackSend color: 'bad', message: "Build failed: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+       }
+    }
 }
 
 
