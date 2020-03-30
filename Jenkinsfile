@@ -1,6 +1,10 @@
 def commitNumber = 0
 def resetNumber=0
 def successfulSHA = null
+def commitHashForBuild( build ) {
+  def scmAction = build?.actions.find { action -> action instanceof jenkins.scm.api.SCMRevisionAction }
+  return scmAction?.revision?.hash
+}
 
 pipeline {
     agent any
@@ -40,6 +44,17 @@ pipeline {
           steps{
             bat "py writeToFile.py"
           }
+        }
+
+        stage('getSuccessfulHash'){
+          def getLastSuccessfulCommit() {
+          def lastSuccessfulHash = null
+          def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
+          if ( lastSuccessfulBuild ) {
+            lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+          }
+          echo "${lastSuccessfulHash}"
+        }
         }
     }
 }
