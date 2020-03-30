@@ -29,7 +29,8 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            cmd /c "echo 0 > hello2.txt"
+            bat "dir > hello2.txt"
+            bat "echo 0 > hello2.txt"
           }
         }
 
