@@ -8,7 +8,7 @@ pipeline {
         stage('getCommitNumber') {
           steps{
             script{
-              value = readFile('hello.txt').trim()
+              value = readFile('counter.txt').trim()
               commitNumber= value as int
               echo "There are ${commitNumber} commits"
             }
@@ -29,8 +29,7 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat "dir > hello2.txt"
-            bat "echo 0 > hello2.txt"
+            bat "py writeToFile.py"
           }
         }
 
