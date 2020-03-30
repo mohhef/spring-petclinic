@@ -29,8 +29,8 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat "dir > hello.txt"
-            bat "echo ${resetNumber} > hello.txt"
+            bat 'dir > hello.txt'
+            bat "${resetNumber} > hello.txt"
           }
         }
 
