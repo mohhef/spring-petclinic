@@ -1,5 +1,5 @@
 def commitNumber = 0
-def resetNumber = 0
+def resetNumber=0
 
 pipeline {
     agent any
@@ -29,7 +29,7 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat echo "0 > hello.txt"
+            bat "echo 0 > hello.txt"
           }
         }
 
