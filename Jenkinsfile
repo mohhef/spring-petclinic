@@ -26,7 +26,7 @@ pipeline {
         }
         stage('doFullBuild'){
           when{
-            expression{commitNumber>=5 || successfulSHA=''}
+            expression{commitNumber>=5 || successfulSHA==''}
           }
           steps{
             bat './mvnw clean'
