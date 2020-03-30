@@ -8,7 +8,7 @@ pipeline {
           steps{
             script{
               value = readFile('hello.txt').trim()
-              commitCounter= value as int
+              commitNumber= value as int
               echo "The comit number is ${commitNumber}"
             }
           }
