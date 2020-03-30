@@ -9,10 +9,20 @@ pipeline {
             script{
               value = readFile('hello.txt').trim()
               commitNumber= value as int
-              echo "The comit number is ${commitNumber}"
+              echo "There are ${commitNumber} commits"
             }
           }
         }
+
+        state('doFullBuild'){
+          when{
+            expression{commitNumber>=5}
+          }
+          steps{
+            bat './mvnw clean compile'
+          }
+        }
+        
     }       
 }
 
