@@ -47,7 +47,7 @@ pipeline {
           steps{
           script{
             Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
-            writeFile file: 'D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinicsuccessfulSHA.txt', text: id"
+            writeFile file: 'D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinicsuccessfulSHA.txt', text: id
             }
           }
           }
