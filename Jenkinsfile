@@ -47,14 +47,6 @@ pipeline {
             bat "py writeToFile.py"
           }
         }
-
-        stage('getSuccessfulHash'){
-          steps{
-          script{
-            Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
-            }
-          }
-          }
     }
 }
 
