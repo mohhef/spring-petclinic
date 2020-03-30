@@ -20,7 +20,7 @@ pipeline {
             expression{commitNumber>=5}
           }
           steps{
-            bat './mvnw clean compile'
+            bat './mvnw clean'
           }
         }
 
@@ -30,7 +30,7 @@ pipeline {
           }
           steps{
             bat "dir > hello.txt"
-            bat "echo ${resetNumber} > commitCounter.txt"
+            bat "echo ${resetNumber} > hello.txt"
           }
         }
 
