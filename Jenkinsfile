@@ -49,12 +49,11 @@ pipeline {
         }
 
         stage('getSuccessfulHash'){
-          steps{
-            if ( lastSuccessfulBuild ) {
-              lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+          script{
+            Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
+            echo "${Id}"
             }
-            echo "${lastSuccessfulHash}"
-            }
+          }
         }
     }
 }
