@@ -30,7 +30,7 @@ pipeline {
           }
           steps{
             bat 'dir > hello.txt'
-            bat "${resetNumber} > hello.txt"
+            bat "echo ${resetNumber} > hello.txt"
           }
         }
 
