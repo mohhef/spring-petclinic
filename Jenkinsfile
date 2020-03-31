@@ -7,7 +7,7 @@ pipeline {
     agent any
     stages {
 
-        stage('getCommitNumber') {
+        stage('getCommitNumber' && branch 'master') {
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
@@ -34,7 +34,7 @@ pipeline {
           steps{
             script{
             try{
-            bat './mvnwr test'
+            bat './mvnw test'
             }
             catch(error){
               didFail=true
@@ -75,7 +75,7 @@ pipeline {
               bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt"                        
               BROKEN = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt").trim()
               bat "git bisect start ${BROKEN} ${STABLE}"
-			        bat "git bisect run mvn clean test"
+			        bat "git bisect run ./mvnw clean test"
 			        bat "git bisect reset"
             }
           }
