@@ -30,7 +30,9 @@ pipeline {
             expression{commitNumber>=5 || successfulSHA==''}
           }
           steps{
+            try{
             bat './mvnw clean'
+            }
           }
         }
 
@@ -43,7 +45,7 @@ pipeline {
           }
         }
 
-        stage('getSuccessfulHash'){
+        stage('saveSuccessfulHash'){
           steps{
           script{
             bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt"                        
