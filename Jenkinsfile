@@ -56,8 +56,6 @@ pipeline {
             }
             catch(error){
               didFail=true
-              echo "------>${eroor}"
-              echo "${didFail}"
             }
             }
           }
