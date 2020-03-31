@@ -38,7 +38,7 @@ pipeline {
             bat './mvnw Clean'
             }
             catch(error){
-              "------>${eroor}"
+              "------>${error}"
               didFail=true
               echo "${didFail}"
             }
