@@ -49,12 +49,14 @@ pipeline {
             expression{commitNumber>=8 || successfulSHA==''}
           }
           steps{
-            script{
+            script {
             try{
             bat './mvnw test'
+            echo "${didFail}"
             }
             catch(error){
               didFail=true
+              echo "${didFail}"
             }
             }
           }
