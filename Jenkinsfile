@@ -6,7 +6,7 @@ def didFail = false
 pipeline {
     agent any
     stages {
-      if(env.BRANCH_NAME == 'master'){
+      if(env.BRANCH_NAME == 'new-test6'){
         stage('getCommitNumber') {
           steps{
             script{
