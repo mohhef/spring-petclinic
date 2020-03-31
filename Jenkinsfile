@@ -80,7 +80,7 @@ pipeline {
         }
 
         stage('saveSuccessfulHash'){
-          when{
+          when{ 
             expression{didFail == false}
           }
           steps{
