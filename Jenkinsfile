@@ -6,8 +6,10 @@ def didFail = false
 pipeline {
     agent any
     stages {
-      if(env.BRANCH_NAME == 'new-test6'){
         stage('getCommitNumber') {
+          when {
+              branch 'new-test6'
+          }
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
@@ -80,7 +82,6 @@ pipeline {
             }
           }
         }
-      }
     }
 }
 
