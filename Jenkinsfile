@@ -118,7 +118,7 @@ pipeline {
             bat "py writeToFile.py"
           }
         }
-      }
+       }
 }
 
 
