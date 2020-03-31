@@ -22,7 +22,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.vet.VetRepository;
 
 @SpringBootTest
-class Petc
+class PetclinicIntegrationTests {
+
+	@Autowired
+	private VetRepository vets;
+
 	@Test
 	void testFindAll() throws Exception {
 		vets.findAll();
