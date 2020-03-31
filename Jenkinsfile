@@ -27,17 +27,19 @@ pipeline {
             }
           }
         }
-        
+
         stage('doFullBuild'){
           when{
             expression{commitNumber>=5 || successfulSHA==''}
           }
           steps{
+            script{
             try{
             bat './mvnw clean'
             }
             catch(error){
               didFail=true
+            }
             }
           }
         }
