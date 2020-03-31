@@ -72,7 +72,9 @@ pipeline {
           steps{
             script{
               STABLE = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt") 
-              bat "git bisect start ${STABLE}"
+              bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt"                        
+              BROKEN = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt")
+              bat "git bisect start ${BROKEN} ${STABLE}"
 			        bat "git bisect run mvn clean test"
 			        bat "git bisect reset"
             }
