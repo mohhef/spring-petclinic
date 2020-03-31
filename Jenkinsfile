@@ -6,7 +6,7 @@ def didFail = false
 pipeline {
     agent any
     stages {
-        stage('getCommitNumber&checkIfMaster') {
+        stage('getCommitNumber&checkIfMaster') { 
           when {
               branch 'master'
           }
