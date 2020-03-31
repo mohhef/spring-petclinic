@@ -47,6 +47,7 @@ pipeline {
           steps{
           script{
             lastSuccessfulHash = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
+            echo "${lastSuccessfulHash}"
             writeFile file: 'D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt', text:"${lastSuccessfulHash}"
             }
           }
