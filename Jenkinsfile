@@ -2,19 +2,19 @@ def commitNumber = 0
 def successfulSHA = null
 def lastSuccessfulHash = null
 def didFail = false
+def forSureBROKEN=null
 
 pipeline {
     agent any
     stages {
-      stage('checkMaster'){
-        when{branch 'master'}
-        stage('getCommitNumber&checkIfMaster') {  
+
+        stage('getCommitNumber') {  
 
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
               commitNumber= value as int
-              echo "There are ${commitNumber} commits"
+              echo "There are ${commitNumber} commits in total"
             }
           }
         }
@@ -29,9 +29,25 @@ pipeline {
           } 
         }
 
-        stage('doFullBuild'){
+        stage('doFullBuildClean'){
           when{
-            expression{commitNumber>=5 || successfulSHA==''}
+            expression{commitNumber>=8 || successfulSHA==''}
+          }
+          steps{
+            script{
+            try{
+            bat './mvnw Clean'
+            }
+            catch(error){
+              didFail=true
+            }
+            }
+          }
+        }
+
+        stage('doFullBuildTest'){
+          when{
+            expression{commitNumber>=8 || successfulSHA==''}
           }
           steps{
             script{
@@ -45,12 +61,19 @@ pipeline {
           }
         }
 
-        stage('resetCommitNumber'){
+        stage('doFullBuildPackage'){
           when{
-            expression{commitNumber>=20}
+            expression{(commitNumber>=8 || successfulSHA=='') && didFail==false}
           }
           steps{
-            bat "py writeToFile.py"
+            script{
+            try{
+            bat './mvnw package'
+            }
+            catch(error){
+              didFail=true
+            }
+            }
           }
         }
 
@@ -62,28 +85,41 @@ pipeline {
           script{
             bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt"                        
             commit_id = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt")
-            echo "${commit_id}"
+            echo "Passing build is ${commit_id}"
             }
           }
           }
 
         stage('ifBuildFailed'){
           when{
-            expression{didFail == true && commitNumber>=5}
+            expression{didFail == true && commitNumber>=8}
           }
           steps{
             script{
-              STABLE = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt")
-              bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt"                        
-              BROKEN = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt").trim()
-              bat "git bisect start ${BROKEN} ${STABLE}"
-			        bat "git bisect run ./mvnw clean test"
-			        bat "git bisect reset"
+              if(successfulSHA != ''){
+                STABLE = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt")
+                bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt"                        
+                BROKEN = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt").trim()
+                bat "git bisect start ${BROKEN} ${STABLE}"
+                bat "git bisect run ./mvnw clean test"
+                bat "git bisect reset"
+              }else{
+                bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt"                        
+                forSureBROKEN = readFile("D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\failureSHA.txt").trim()
+              }
             }
           }
         }
+
+        stage('resetCommitNumber'){
+          when{
+            expression{commitNumber>=8 && forSureBROKEN == null}
+          }
+          steps{
+            bat "py writeToFile.py"
+          }
+        }
       }
-    }
 }
 
 
