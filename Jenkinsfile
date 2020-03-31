@@ -24,7 +24,7 @@ pipeline {
               successfulSHA = value
               echo "The SHA file is ${successfulSHA}"
             }
-          }test
+          }
         }
 
         stage('doFullBuild'){
