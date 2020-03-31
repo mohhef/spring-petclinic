@@ -46,8 +46,8 @@ pipeline {
         stage('getSuccessfulHash'){
           steps{
           script{
-            Id = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
-            writeFile file: 'D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinicsuccessfulSHA.txt', text:"we in"
+            lastSuccessfulHash = bat (returnStdout: true, script: "git rev-parse HEAD").trim()
+            writeFile file: 'D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt', text:"${lastSuccessfulHash}"
             }
           }
           }
