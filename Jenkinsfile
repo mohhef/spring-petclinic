@@ -2,6 +2,7 @@ def commitNumber = 0
 def resetNumber=0
 def successfulSHA = null
 def lastSuccessfulHash = null
+def didFail = false
 
 pipeline {
     agent any
@@ -16,6 +17,7 @@ pipeline {
             }
           }
         }
+
         stage('getSuccessfulSHA'){
           steps{
             script{
@@ -25,15 +27,17 @@ pipeline {
             }
           }
         }
+        
         stage('doFullBuild'){
           when{
             expression{commitNumber>=5 || successfulSHA==''}
           }
           steps{
-            script{
             try{
             bat './mvnw clean'
             }
+            catch(error){
+              didFail=true
             }
           }
         }
@@ -48,6 +52,9 @@ pipeline {
         }
 
         stage('saveSuccessfulHash'){
+          when{
+            expression{didFail == false}
+          }
           steps{
           script{
             bat "git rev-parse --short HEAD > D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\successfulSHA.txt"                        
