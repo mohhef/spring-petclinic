@@ -30,8 +30,10 @@ pipeline {
             expression{commitNumber>=5 || successfulSHA==''}
           }
           steps{
+            script{
             try{
             bat './mvnw clean'
+            }
             }
           }
         }
