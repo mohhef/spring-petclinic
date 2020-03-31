@@ -6,8 +6,8 @@ def didFail = false
 pipeline {
     agent any
     stages {
-
-        stage('getCommitNumber' && branch 'master') {
+      if(env.BRANCH_NAME == 'master'){
+        stage('getCommitNumber' && ) {
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
@@ -80,6 +80,7 @@ pipeline {
             }
           }
         }
+      }
     }
 }
 
