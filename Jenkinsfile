@@ -7,7 +7,7 @@ pipeline {
     agent any
     stages {
       if(env.BRANCH_NAME == 'master'){
-        stage('getCommitNumber' && ) {
+        stage('getCommitNumber') {
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
