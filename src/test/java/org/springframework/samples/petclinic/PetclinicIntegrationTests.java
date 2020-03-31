@@ -25,6 +25,11 @@ import org.springframework.samples.petclinic.vet.VetRepository;
 class PetclinicIntegrationTests {
 
 	@Autowired
+	private VetRepository vets;
+
+	@Test
+	void testFindAll() throws Exception {
+		vets.findAll();
 		vets.findAll(); // served from cache
 	}
 
