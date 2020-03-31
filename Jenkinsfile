@@ -1,5 +1,4 @@
 def commitNumber = 0
-def resetNumber=0
 def successfulSHA = null
 def lastSuccessfulHash = null
 def didFail = false
