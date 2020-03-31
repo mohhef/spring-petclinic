@@ -35,7 +35,7 @@ pipeline {
           steps{
             script{
             try{
-            bat './mvnw Clean'
+            bat './mvnw clean'
             }
             catch(error){
               "------>${error}"
@@ -54,7 +54,6 @@ pipeline {
             script {
             try{
             bat './mvnw test'
-            echo "${didFail}"
             }
             catch(error){
               didFail=true
