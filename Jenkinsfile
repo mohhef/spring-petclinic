@@ -65,6 +65,20 @@ pipeline {
             }
           }
           }
+
+        stage('ifBuildFailed'){
+          when{
+            expression{didFail == true && commitNumber>=5}
+          }
+          steps{
+            script{
+              bat "git bisect start ${BROKEN} ${STABLE}"
+			        bat "git bisect run mvn clean test"
+			        bat "git bisect reset"
+
+            }
+          }
+        }
     }
 }
 
