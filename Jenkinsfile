@@ -6,7 +6,6 @@ def didFail = false
 pipeline {
     agent any
     stages {
-
         stage('getCommitNumber') {
           steps{
             script{
