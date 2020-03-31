@@ -87,7 +87,7 @@ pipeline {
             echo "Passing build is ${commit_id}"
             }
           }
-          }
+        }
 
         stage('ifBuildFailed'){
           when{
