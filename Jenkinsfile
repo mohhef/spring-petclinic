@@ -8,8 +8,7 @@ pipeline {
     agent any
     stages {
 
-        stage('getCommitNumber') {  
-
+        stage('getCommitNumber') {
           steps{
             script{
               value = readFile('D:\\Winter2020\\SOEN345\\Ass\\A6\\spring-petclinic\\counter.txt').trim()
