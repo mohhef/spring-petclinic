@@ -24,7 +24,8 @@ import org.springframework.samples.petclinic.vet.VetRepository;
 @SpringBootTest
 class PetclinicIntegrationTests {
 
-	@Auto
+	@Autowired
+	private VetRepository vets;
 
 	@Test
 	void testFindAll() throws Exception {
