@@ -52,7 +52,7 @@ pipeline {
           steps{
             script {
             try{
-            bat './ test'
+            bat './mvnw test'
             }
             catch(error){
               didFail=true
@@ -68,7 +68,7 @@ pipeline {
           steps{
             script{
             try{
-            bat './mvnw ckage'
+            bat './mvnw package'
             }
             catch(error){
               didFail=true
@@ -127,6 +127,7 @@ pipeline {
                 currentBuild.result = "FAILURE"
               } else {
                 currentBuild.result = "SUCCESS" 
+
               } 
             }
           }
