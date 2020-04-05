@@ -127,11 +127,10 @@ pipeline {
                 currentBuild.result = "FAILURE"
               } else {
                 currentBuild.result = "SUCCESS" 
-
               } 
             }
           }
-    }
+         }
   }
 }
 
