@@ -119,7 +119,19 @@ pipeline {
             bat "py writeToFile.py"
           }
         }
-       }
+
+        stage('Finish') {
+          steps {
+            script {
+              if(didFail){
+                currentBuild.result = "FAILURE"
+              } else {
+                currentBuild.result = "SUCCESS" 
+              } 
+            }
+          }
+    }
+  }
 }
 
 
