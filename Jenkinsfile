@@ -119,8 +119,8 @@ pipeline {
             bat "py writeToFile.py"
           }
         }
-
-        stage('Finish') {
+		
+		stage('Finish') {
           steps {
             script {
               if(didFail){
@@ -131,7 +131,9 @@ pipeline {
             }
           }
          }
-  }
+		
+		
+       }
 }
 
 
